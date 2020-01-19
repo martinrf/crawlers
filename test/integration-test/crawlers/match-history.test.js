@@ -1,5 +1,8 @@
 const MatchHistoryCrawler = require('../../../src/crawlers/gamepedia/match-history');
 const assert = require('assert');
+const describe = require('mocha').describe;
+const it = require('mocha').it;
+const beforeEach = require('mocha').beforeEach;
 
 describe('integration tests for gamepedia match history pager', () => {
 
@@ -10,17 +13,15 @@ describe('integration tests for gamepedia match history pager', () => {
     await matchHistoryCrawler.setPageData();
   });
 
-  describe('get match history page content', () => {
-    it('get lcs na summer sprint page', async() => {
-      const page = await matchHistoryCrawler.getPage();
-      assert.equal(page.statusText, 'OK');
-      assert.equal(page.status, 200);
-      assert.equal(page.headers['content-type'], 'text/html; charset=UTF-8');
-      assert.ok(page.data);
-    });
+  it('get lcs na summer sprint page', async() => {
+    const page = await matchHistoryCrawler.getPage();
+    assert.equal(page.statusText, 'OK');
+    assert.equal(page.status, 200);
+    assert.equal(page.headers['content-type'], 'text/html; charset=UTF-8');
+    assert.ok(page.data);
   });
 
-  it('get lcs na summer sprint page', async() => {
+  it('get lcs na summer sprint page 2', async() => {
     const pageData = matchHistoryCrawler.getData();
     assert.ok(pageData);
   });
@@ -38,6 +39,19 @@ describe('integration tests for gamepedia match history pager', () => {
       '<th>Red Roster</th><th>SB</th><th>MH</th><th>VOD</th>';
     const headers = await matchHistoryCrawler.getRowHeaders(tr);
     assert.ok(headers);
-    assert.equal(headers.length, 14);
+    assert.equal(headers[0], 'Date');
+    assert.equal(headers[1], 'P');
+    assert.equal(headers[2], 'Blue');
+    assert.equal(headers[3], 'Red');
+    assert.equal(headers[4], 'Winner');
+    assert.equal(headers[5], 'Bans');
+    assert.equal(headers[6], 'Bans');
+    assert.equal(headers[7], 'Picks');
+    assert.equal(headers[8], 'Picks');
+    assert.equal(headers[9], 'Blue Roster');
+    assert.equal(headers[10], 'Red Roster');
+    assert.equal(headers[11], 'SB');
+    assert.equal(headers[12], 'MH');
+    assert.equal(headers[13], 'VOD');
   });
 });
