@@ -2,7 +2,7 @@ const proxyquire = require('proxyquire').noCallThru();
 const stubAxios = {
   'get': () => { return { 'Status': 200, 'StatusText': 'OK', 'data' : '<html></html>' }; }
 };
-const MatchHistoryCrawler = proxyquire('../../../src/crawlers/gamepedia/match-history', {
+const MatchHistoryCrawler = proxyquire('../../../../src/crawlers/gamepedia/match-history', {
   'axios': stubAxios
 });
 const assert = require('assert');
@@ -11,7 +11,7 @@ describe('Gamepedia Matchi History Crawlers', () => {
     let matchHistoryCrawler;
     const url = 'https://www.weblink.com/test1/test2/test3';
     beforeEach(()=>{
-      matchHistoryCrawler = new MatchHistoryCrawler(url)
+      matchHistoryCrawler = new MatchHistoryCrawler(url);
     });
 
     it('getPage makes an axios get request of the url and returns only the content of it', async () => {
@@ -22,7 +22,7 @@ describe('Gamepedia Matchi History Crawlers', () => {
     it('gets the page data for the given url', async () => {
       const pageData = await matchHistoryCrawler.setPageData();
       assert.ok(pageData);
-      assert.equal(pageData, '<html></html>')
+      assert.equal(pageData, '<html></html>');
     });
   });
 });
