@@ -6,9 +6,8 @@
   "scripts": {
     "lint": "eslint src/**/*.js test/**/*.js",
     "lint-fix": "eslint --fix src/**/*.js test/**/*.js",
-    "test": "mocha test/unit-test/**/*.test.js --recursive",
-    "integration-test": "mocha test/integration-test/**/*.test.js --recursive",
-    "coverage": "nyc --reporter=lcov --reporter=text-summary npm run integration-test"
+    "test": "mocha test/**/*.test.js --recursive",
+    "coverage": "nyc --reporter=lcov --reporter=text-summary npm run test"
   },
   "repository": {
     "type": "git",
