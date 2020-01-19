@@ -1,5 +1,4 @@
 const axios = require('axios');
-const cheerio = require('cheerio');
 const $ = require('cheerio');
 
 module.exports = class MatchHistoryCrawler {
@@ -15,8 +14,7 @@ module.exports = class MatchHistoryCrawler {
 
   async getPage() {
     if (!this.url) return null;
-    const page = await axios.get(this.url);
-    return page;
+    return await axios.get(this.url);
   }
 
   async setPageData(){
@@ -25,38 +23,49 @@ module.exports = class MatchHistoryCrawler {
     return this.data;
   }
 
-  async getRows(){
-    const $ = cheerio.load(this.data);
-    let table = [];
-    // let headers = {};
-    $('.wide-content-scroll table tr').each((i, tr) => {
-      //console.log(i);
+  async getTable(){
+    let table = {};
+    table.rows = [];
+    $('.wide-content-scroll table tr', this.data).each((i, tr) => {
       if (i === 1){
-        //headers = this.getRowHeaders($(tr).html());
+        table.headers = this.getRowHeaders($(tr).html());
       }
-      if (i === 3){
-        const links =  $(tr).find( 'a' );
-        // const tds = $(tr).html();
-        for(let j = 0; j < links.length; j++){
-          //console.log(j, $(links[j]).attr('href'));
-          //console.log(j, headers[j], tds);
-          table.push({
-            'patch': $(links[0]).attr('href')
-          });
-        }
+      if (i >= 3){
+        const row = this.getRow(table.headers, $(tr).html());
+        table.rows.push(row);
       }
     });
     return table;
   }
 
+  /***
+   * Gets and object which keys are the index number of a table header and its value the title of the row.
+   * @param tr
+   * @returns {{}}
+   */
   getRowHeaders(tr) {
     let ths = $('th', tr);
-    let headers = [];
+    let headers = {};
     for (let i = 0; i < ths.length; i++) {
       const head = $(ths[i]).text();
-      headers.push(this.cleanHeader(head, i));
+      headers[i] = this.cleanHeader(head, i);
     }
-    return {...headers};
+    return headers;
+  }
+
+  /***
+   * Gets an object form a table row.
+   * @param headers
+   * @param tr
+   * @returns {{}}
+   */
+  getRow(headers, tr) {
+    let tds = $('td', tr);
+    let row = {};
+    for (let i = 0; i < tds.length; i++){
+      row[headers[i]] = this.cleanRow($(tds[i]).html(), i);
+    }
+    return row;
   }
 
   cleanHeader(headerText, index){
@@ -95,15 +104,5 @@ module.exports = class MatchHistoryCrawler {
       }
     }
     return value;
-  }
-
-  getRow(headers, tr) {
-    let tds = $('td', tr);
-    let row = {};
-    for (let i = 0; i < tds.length; i++){
-      const value = this.cleanRow($(tds[i]).html(), i);
-      row[headers[i]] = value;
-    }
-    return row;
   }
 };

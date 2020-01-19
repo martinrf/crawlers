@@ -27,10 +27,13 @@ describe('integration tests for gamepedia match history pager', () => {
     assert.ok(pageData);
   });
 
-  it('gets a list of match rows', async() => {
+  it('gets the table', async() => {
     await matchHistoryCrawler.setPageData();
-    const table = await matchHistoryCrawler.getRows();
+    const table = await matchHistoryCrawler.getTable();
     assert.ok(table);
+    assert.equal(table.headers[0], 'date');
+    assert.equal(table.headers[13], 'vod');
+    assert.equal(table.rows.length, 91);
   });
 
   it('gets the row headers from a tr', async() => {
