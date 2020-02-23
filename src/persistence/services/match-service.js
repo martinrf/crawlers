@@ -1,11 +1,11 @@
-const TournamentModel = require('../models/tournament');
+const MatchModel = require('../models/match');
 const { logger } = require('../../../logger');
 
-class TournamentService {
+class MatchService {
 
-    async create(tournament) {
+    async create(team) {
         try {
-            let model = new TournamentModel(tournament);
+            let model = new MatchModel(team);
             return await model.save();
         } catch (error) {
             logger.error(error);
@@ -15,8 +15,7 @@ class TournamentService {
 
     async updateOne(conditions, update, options = { multi: false }) {
         try {
-            const response = await TournamentModel.updateOne(conditions, update, options);
-            return response;
+            return await MatchModel.updateOne(conditions, update, options);
         } catch (error) {
             logger.error(error);
             throw error;
@@ -25,8 +24,7 @@ class TournamentService {
 
     async findById(id) {
         try {
-            const tournament = await TournamentModel.findOne({ '_id': id });
-            return tournament;
+            return await MatchModel.findOne({ '_id': id });
         } catch (error) {
             logger.error(error);
             throw error;
@@ -34,4 +32,4 @@ class TournamentService {
     }
 }
 
-module.exports = new TournamentService();
+module.exports = new MatchService();

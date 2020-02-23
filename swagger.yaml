@@ -1,0 +1,70 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Crawlers
+servers:
+  - url: http://localhost:6000
+    description: Local Server
+paths:
+  /health:
+    get:
+      summary: Health Check
+      operationId: getHealth
+      tags:
+        - health
+      responses:
+        '200':
+          description: Health Check route
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Health Check
+      operationId: postHealth
+      tags:
+        - health
+      responses:
+        '200':
+          description: Health Check route
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    HealthResponse:
+      required:
+        - alive
+        - name
+        - version
+      properties:
+        alive:
+          type: boolean
+        name:
+          type: string
+        version:
+          type: string
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
