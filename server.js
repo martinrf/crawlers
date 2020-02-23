@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT;
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { logger } = require('./logger');
+const { logger } = require('./util/logger');
 
 const mongoose = require("mongoose");
 const mongoOptions = {

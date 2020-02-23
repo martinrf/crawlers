@@ -1,5 +1,5 @@
 const TeamModel = require('../models/team');
-const { logger } = require('../../../logger');
+const { logger } = require('../../../util/logger');
 
 class TeamService {
 

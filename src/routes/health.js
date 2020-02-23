@@ -1,6 +1,6 @@
 const pjson = require('../../package');
 const HealthTestModel = require('../persistence/models/healthTest');
-const { logger } = require('../../logger');
+const { logger } = require('../../util/logger');
 const health = {
     'alive': true,
     'name': pjson.name,

@@ -1,5 +1,5 @@
 const MatchModel = require('../models/match');
-const { logger } = require('../../../logger');
+const { logger } = require('../../../util/logger');
 
 class MatchService {
 

@@ -6,6 +6,9 @@ const MatchHistoryCrawler = proxyquire('../../../../src/crawlers/gamepedia/match
     'axios': stubAxios
 });
 const assert = require('assert');
+const describe = require('mocha').describe;
+const it = require('mocha').it;
+const beforeEach = require('mocha').beforeEach;
 describe('Gamepedia Matchi History Crawlers', () => {
     describe('get match history gamepedia page', () => {
         let matchHistoryCrawler;

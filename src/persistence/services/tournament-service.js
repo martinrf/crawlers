@@ -1,5 +1,5 @@
 const TournamentModel = require('../models/tournament');
-const { logger } = require('../../../logger');
+const { logger } = require('../../../util/logger');
 
 class TournamentService {
 

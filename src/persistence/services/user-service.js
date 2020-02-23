@@ -1,5 +1,5 @@
 const UserModel = require('../models/user');
-const { logger } = require('../../../logger');
+const { logger } = require('../../../util/logger');
 
 class UserService {
 

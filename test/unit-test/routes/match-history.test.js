@@ -24,7 +24,7 @@ describe('match history routes', async () => {
             '../persistence/services/match-service': {
                 findById: findByIdStub
             },
-            '../../logger': loggerMock
+            '../../util/logger': loggerMock
         });
         matchHistory(app);
         request = supertest(app);
